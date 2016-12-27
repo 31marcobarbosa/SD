@@ -6,7 +6,7 @@ import java.net.Socket;
 
 
 public class Servidor {
-	private static int porta = 6062;
+	private static int port = 6062;
 	// private static (classe principal)  k = null
 
 
@@ -27,7 +27,7 @@ public class Servidor {
 
 
 	public static void main (String args[]) throws IOException  {
-		ServerSocket ss = new ServerSocket (porta);
+		ServerSocket ss = new ServerSocket (port);
 
 		// (classe principal) k = new (classe principal)();
 
@@ -48,8 +48,9 @@ public class Servidor {
 // por esta parte a funcionar
 		while (true) {
 			Socket cliente = ss.accept();
-			System.out.println("Entrou no servidor\n IP") // cliente -> getInetAdress
+			System.out.println("Entrou no servidor\n IP" + cliente.getInetAdress()) // cliente -> getInetAdress
 
+			new Thread(new Handler(cliente k)).start();
 			// criar duas threads uma para leitura e outra para escrita
 		}
 

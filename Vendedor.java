@@ -1,13 +1,11 @@
 public class Vendedor extends Utilizador {
-    
-    private Set<Imovel> venda, vendidos;
 
     public Vendedor(String username, String password){
         super(username, password);
     }
     
     public Vendedor(){
-        this("","");
+        this("","", false);
     }
     
     public Vendedor(Vendedor v){

@@ -3,19 +3,22 @@ import java.io.Serializable;
 public abstract class Utilizador implements Serializable
 {
    private String username, password;
+   private boolean logged;
    
-   public Utilizador(String username, String password){
+   public Utilizador(String username, String password, boolean logged){
        this.username = username;
        this.password = password;
+       this.logged = logged;
   }
     
    public Utilizador(){
-       this("","");
+       this("","", false);
    }
    
    public Utilizador(Utilizador u){
        this.username = u.getUsername();
        this.password = u.getPassword();
+       this.logged = u.getLogged();
    }
     
    public String getPassword(){
@@ -26,12 +29,20 @@ public abstract class Utilizador implements Serializable
       return username;
     }
 
+    public String getLogged() {
+      return logged;
+    }
+
    public void setPassword(String password){
       this.password = password;
     }
     
    public void setUsername(String username) {
       this.username = username;
+   }
+
+   public void setLogged(boolean logged) {
+      this.logged = logged;
    }
     
    public boolean equals(Object o){

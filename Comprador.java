@@ -1,11 +1,8 @@
 public class Comprador extends Utilizador{
-	private String nickname;
-	private String pass;
-
 
 	// Construtores
 	public Comprador () {
-		this.("", "");
+		this.("", "", false);
 	}
 
 	public Comprador (String nickname, String pass) {
