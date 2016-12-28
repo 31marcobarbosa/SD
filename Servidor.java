@@ -16,6 +16,8 @@ public class Servidor {
 	public static final String SAIR_VENDEDOR = "SairVendedor";
 	public static final String INICIAR_LEILAO_VEND = "IniciarLeilaoVendedor";
 	public static final String FINALIZAR_LEILAO_VEND = "FinalizarLeilaoVendedor";
+	public static final String NOME_VENDEDOR = "NomeVendedor";
+	public static final String PASS_VENDEDOR = "PassVendedor";
 	//public static final String CONSULTAR_LEILAO_VEND = "ConsultarLeilaoVendedor";
 
 	// Ações do Comprador
@@ -23,6 +25,8 @@ public class Servidor {
 	public static final String LOGAR_COMPRADOR = "LogarComprador";
 	public static final String SAIR_COMPRADOR = "SairComprador";
 	public static final String FAZER_LICITACAO_COMP = "FazerLicitaçãoComprador"
+	public static final String NOME_COMPRADOR = "NomeComprador";
+	public static final String PASS_COMPRADOR = "PassComprador";
 
 
 
