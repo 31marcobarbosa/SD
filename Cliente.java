@@ -52,8 +52,8 @@ public class Cliente {
         System.out.println("#   1 - Comprador                                        #");
         System.out.println("#   2 - Vendedor                                         #");
         System.out.println("#   3 - Sair da aplicação                                #");
-		System.out.println("#                                                        #");
-		System.out.println("##########################################################");
+	System.out.println("#                                                        #");
+	System.out.println("##########################################################");
 
         String op = in.next();
 
@@ -118,8 +118,8 @@ public class Cliente {
 	  op = menuLoginComprador();
 
 		if (op.equals("1")){
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> ENTRAR <<<<<<<<<<<<<<<<<<<<<<<<<<");
-			in.nextLine();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> ENTRAR <<<<<<<<<<<<<<<<<<<<<<<<<<");
+		in.nextLine();
         	System.out.println("#   Introduza um username:                               #");
         	String nick = in.nextLine();
         	System.out.println("#                                                        #");
@@ -150,7 +150,7 @@ public class Cliente {
             } 
 		} else {
 			  if (op.equals("2")) {
-			  	    System.out.println(">>>>>>>>>>>>>>>>>>>>>>> REGISTAR <<<<<<<<<<<<<<<<<<<<<<<<<");
+		    System.out.println(">>>>>>>>>>>>>>>>>>>>>>> REGISTAR <<<<<<<<<<<<<<<<<<<<<<<<<");
                     System.out.println("#                                                        #");
                     in.nextLine()
                     System.out.println("#   Defina um username                                   #");
@@ -207,9 +207,9 @@ public class Cliente {
     	op = menuLoginVendedor();
 
     	if (op.equals("1")){
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> ENTRAR <<<<<<<<<<<<<<<<<<<<<<<<<<");
-            System.out.println("#                                                        #");
-			in.nextLine();
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> ENTRAR <<<<<<<<<<<<<<<<<<<<<<<<<<");
+                System.out.println("#                                                        #");
+		in.nextLine();
         	System.out.println("#   Introduza o seu username:                            #");
         	String nick = in.nextLine();
         	System.out.println("#                                                        #");
@@ -240,7 +240,7 @@ public class Cliente {
             } 
         } else {
         		if (op.equals("2")) {
-			  	    System.out.println(">>>>>>>>>>>>>>>>>>>>>>> REGISTAR <<<<<<<<<<<<<<<<<<<<<<<<<");
+		    System.out.println(">>>>>>>>>>>>>>>>>>>>>>> REGISTAR <<<<<<<<<<<<<<<<<<<<<<<<<");
                     System.out.println("#                                                        #");
                     in.nextLine();
                     System.out.println("#   Defina um username                                   #");
@@ -271,7 +271,7 @@ public class Cliente {
 
 	public static void menuPrincipalComprador() throws IOException, ClassNotFoundException {
 
-		System.out.println(">>>>>>>>>>>>>>>>>>>>> ÁREA DE COMPRADOR <<<<<<<<<<<<<<<<<<");
+	System.out.println(">>>>>>>>>>>>>>>>>>>>> ÁREA DE COMPRADOR <<<<<<<<<<<<<<<<<<");
         System.out.println("#                                                        #");
         System.out.println("#   "  +  nickname  );
         System.out.println("#                                                        #");
@@ -307,7 +307,7 @@ public class Cliente {
 
 	public static void menuPrincipalVendedor() throws IOException, ClassNotFoundException {
 
-		System.out.println(">>>>>>>>>>>>>>>>>>>>> ÁREA DE VENDEDOR <<<<<<<<<<<<<<<<<<<");
+	System.out.println(">>>>>>>>>>>>>>>>>>>>> ÁREA DE VENDEDOR <<<<<<<<<<<<<<<<<<<");
         System.out.println("#                                                        #");
         System.out.println("#   "  +  nickname  );
         System.out.println("#                                                        #");
