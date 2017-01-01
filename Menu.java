@@ -122,8 +122,9 @@ public class Menu {
         System.out.println("#                                                        #");
         System.out.println("#   "  +  nickname  );
         System.out.println("#                                                        #");
-        System.out.println("#   1 - Escolhe Leilão a Participar(Licitação)                           #");
-        System.out.println("#   2 - Logout                                           #");
+        System.out.println("#   1 - Escolhe Leilão a Participar(Licitação)           #");
+        System.out.println("#   2 - Consultar Leilão                                 #");
+        System.out.println("#   3 - Logout                                           #");
         System.out.println("#                                                        #");
         System.out.println("#   Escolha uma opção                                    #");
         System.out.println("##########################################################");
@@ -134,12 +135,15 @@ public class Menu {
                    menuEscolheLeilao();
                 }    
             	if(op.equals("2")) {
-                   logoutComprador();
+                   // função consultar leilao 
+                if (op.equals("3")) {
+                    logoutComprador();
+                }
                }else{
                	System.out.println("Opcão inválida!");
                	menuPrincipalComprador();
            		}
-        	} while(!(op.equals("1") || op.equals("2")));
+        	} while(!(op.equals("1") || op.equals("2") || op.equals("3")));
       	}
 
 
@@ -158,7 +162,8 @@ public class Menu {
         System.out.println("#                                                        #");
         System.out.println("#   1 - Inicia Leilão                                    #");
         System.out.println("#   2 - Finaliza Leilão                                  #");
-        System.out.println("#   3 - Logout                                           #");
+        System.out.println("#   3 - Consultar Leilão                                 #");
+        System.out.println("#   4 - Logout                                           #");
         System.out.println("#                                                        #");
         System.out.println("#   Escolha uma opção                                    #");
         System.out.println("##########################################################");
@@ -172,13 +177,16 @@ public class Menu {
                    menuFininalizaLeilao();
                }
                 if (op.equals("3")){
-                	logoutVendedor();
+                	// função de consulta de leilão
+                }
+                if (op.equals("4")){
+                    logoutVendedor();
                 }
                else{
                	System.out.println("Opcão inválida!");
                	menuPrincipalComprador();
            		}
-        	} while(!(op.equals("1") || op.equals("2") || op.equals("3")));
+        	} while(!(op.equals("1") || op.equals("2") || op.equals("3") || op.equals("4")));
     }
 
      public static String menuVendLeilao(){
@@ -186,7 +194,6 @@ public class Menu {
         System.out.println(">>>>>>>>>>>>>>>>>> MENU LEILÃO VENDEDOR  <<<<<<<<<<<<<<<<<");
         System.out.println("#                                                        #");
         System.out.println("#   1 - Terminar Leilão                                  #");
-        System.out.println("#   2 - Consultar Leilão                                 #");
         System.out.println("#   0 - Terminar Sessão                                  #");
         System.out.println("#                                                        #");
         System.out.println("#   Escolha uma opção:                                   #");
@@ -194,7 +201,7 @@ public class Menu {
 
         String op = in.next();
 
-        if ( !(op.equals("1") || op.equals("2") || op.equals("0")))
+        if ( !(op.equals("1") || op.equals("0")))
                 op = menuVendLeilao();
         return op;
     }
@@ -206,7 +213,6 @@ public class Menu {
         System.out.println(">>>>>>>>>>>>>>>>>> MENU LEILÃO COMPRADOR  <<<<<<<<<<<<<<<<");
         System.out.println("#                                                        #");
         System.out.println("#   1 - Licitar Leilão                                   #");
-        System.out.println("#   2 - Consultar Leilão                                 #");
         System.out.println("#   0 - Terminar Sessão                                  #");
         System.out.println("#                                                        #");
         System.out.println("#   Escolha uma opção:                                   #");
@@ -214,7 +220,7 @@ public class Menu {
 
         String op = in.next();
 
-        if ( !(op.equals("1") || op.equals("2") || op.equals("0")))
+        if ( !(op.equals("1") || op.equals("0")))
                 op = menuVendLeilao();
         return op;
     }
