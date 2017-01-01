@@ -1,3 +1,5 @@
+package trabSD;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,17 +16,18 @@ public class Cliente {
 	private static String local = "localhost";
 	private static Socket clienteSocket;
 
-	private Scanner in = new Scanner (System.in);
+	private static Scanner in = new Scanner (System.in);
 	public static ObjectOutputStream o = null;
 	public static ObjectInputStream i = null;
-	//public static HashMap <String,String> hash;
+	public static HashMap <String,String> enviahash;
 	public static String nickname = null;
+        public static EnviaAcoes ea;
 
 
 	public static void main (String args[]) throws Exception{
 		clienteSocket = new Socket (local,port);
 		
-		menuTipoUtilizador();
+		menuIdentUtilizador();
 	}
 
 
@@ -54,11 +57,11 @@ public class Cliente {
 
     	do{
     		if (op.equals("1")){
-    			menuComprador();
+    			menuRegComprador();
     		}
     		else {
     			if (op.equals("2")) {
-    				menuVendedor();
+    				menuRegVendedor();
     			}
     			else {
     				if (op.equals("3")){
@@ -72,7 +75,7 @@ public class Cliente {
 
 
 	public static String menuLoginComprador(){
-    	System op;
+    	String op;
 
     	System.out.println(">>>>>>>>>>>>>>>>>>>> MENU COMPRADOR <<<<<<<<<<<<<<<<<<<<<<");
         System.out.println("#                                                        #");
@@ -91,8 +94,12 @@ public class Cliente {
         return op;
     }  
     
-
-	public static void menuComprador() throws IOException,ClassNotFoundException{
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static void menuRegComprador() throws IOException,ClassNotFoundException{
 	
 	  String op;
 	  op = menuLoginComprador();
@@ -101,29 +108,29 @@ public class Cliente {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> Entrar <<<<<<<<<<<<<<<<<<<<<<<<<<");
 			in.nextLine();
         	System.out.println("#   Introduza um nickname                                #");
-        	String nick = in.nextLine();
+        	String username = in.nextLine();
         	System.out.println("#                                                        #");
         	System.out.println("#   Introduza a password                                 #");
         	String pass = in.nextLine();
         	System.out.println("#                                                        #");
         	System.out.println("##########################################################");
 		
-        	tabhash = new HashMap <>();
-        	tabhash.put(Servidor.NOME_COMPRADOR,nick);
-        	tabhash.put(Servidor.PASS_COMPRADOR,pass);
+        	enviahash = new HashMap <>();
+        	enviahash.put(Servidor.NOME_COMPRADOR,username);
+        	enviahash.put(Servidor.PASS_COMPRADOR,pass);
 
-        	// p = new PacoteDados (Servidor.LOGAR_COMPRADOR,tabhash);
+        	ea = new EnviaAcoes(Servidor.LOGAR_COMPRADOR,enviahash);
 
         	o = new ObjectOutputStream(clienteSocket.getOutputStream());
-            o.writeObject(p);
+            o.writeObject(ea);
             o.flush();
 
             BufferedReader sktInput = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
             String result = sktInput.readLine();
 
             if(result.equals("Entrou")){
-                nick = user;
-                menuPrincipalPassageiro();
+                nickname = username;
+                menuPrincipalComprador();
             }else{
                 System.err.println("ERRO!!!!!! LOGIN INVÁLIDO COMPRADOR");
                 System.exit(0);
@@ -132,23 +139,23 @@ public class Cliente {
 			  if (op.equals("2")) {
 			  	    System.out.println(">>>>>>>>>>>>>>>>>>>>>>> Registar <<<<<<<<<<<<<<<<<<<<<<<<<");
                     System.out.println("#                                                        #");
-                    in.nextLine()
+                    in.nextLine();
                     System.out.println("#   Defina um username                                   #");
-                    String nick = in.nextLine();
+                    String username = in.nextLine();
                     System.out.println("#   Defina uma password                                  #");
                     String pass = in.nextLine();
                     System.out.println("#                                                        #");
                     System.out.println("##########################################################");
 			  
-              		tabhash = new HashMap<>();
-                	tabhash.put(Servidor.NOME_PASSAGEIRO, user);
-                	tabhash.put(Servidor.PW_PASSAGEIRO, pw);
+              		enviahash = new HashMap<>();
+                	enviahash.put(Servidor.NOME_COMPRADOR, username);
+                	enviahash.put(Servidor.PASS_COMPRADOR, pass);
                 
-                	// p = new PacoteDados(Servidor.REGISTAR_PASSAGEIRO,tabhash);
+                	ea = new EnviaAcoes(Servidor.REGISTAR_COMPRADOR,enviahash);
 
                 	o = new ObjectOutputStream(clienteSocket.getOutputStream());
-	                o.writeObject(p);
-    	            o.flush();
+	                o.writeObject(ea);
+                        o.flush();
 
     	            BufferedReader sktInput = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
                     System.out.println("\n"+sktInput.readLine()+"\n");
@@ -179,7 +186,7 @@ public class Cliente {
     }  
 
 
-    public static void menuVendedor () throws IOException, ClassNotFoundException{
+    public static void menuRegVendedor () throws IOException, ClassNotFoundException{
     	String op;
     	op = menuLoginVendedor();
 
@@ -187,28 +194,28 @@ public class Cliente {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> Entrar <<<<<<<<<<<<<<<<<<<<<<<<<<");
 			in.nextLine();
         	System.out.println("#   Introduza um nickname                                #");
-        	String nick = in.nextLine();
+        	String username = in.nextLine();
         	System.out.println("#                                                        #");
         	System.out.println("#   Introduza a password                                 #");
         	String pass = in.nextLine();
         	System.out.println("#                                                        #");
         	System.out.println("##########################################################");
 		
-        	tabhash = new HashMap <>();
-        	tabhash.put(Servidor.NOME_VENDEDOR,nick);
-        	tabhash.put(Servidor.PASS_VENDEDOR,pass);
+        	enviahash = new HashMap <>();
+        	enviahash.put(Servidor.NOME_VENDEDOR,username);
+        	enviahash.put(Servidor.PASS_VENDEDOR,pass);
 
-        	// p = new PacoteDados (Servidor.LOGAR_VENDEDOR,tabhash);
+        	ea = new EnviaAcoes (Servidor.LOGAR_VENDEDOR,enviahash);
 
         	o = new ObjectOutputStream(clienteSocket.getOutputStream());
-            o.writeObject(p);
-            o.flush();
+                o.writeObject(ea);
+                o.flush();
 
             BufferedReader sktInput = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
             String result = sktInput.readLine();
 
             if(result.equals("Entrou")){
-                nick = user;
+                nickname = username;
                 menuPrincipalVendedor();
             }else{
                 System.err.println("ERRO!!!!!! LOGIN INVÁLIDO VENDEDOR");
@@ -226,15 +233,15 @@ public class Cliente {
                     System.out.println("#                                                        #");
                     System.out.println("##########################################################");
         	
-        			tabhash = new HashMap<>();
-        			tabhash.put (Servidor.NOME_VENDEDOR,nick);
-        			tabhash.put (Servidor.PASS_VENDEDOR,pass);
+        			enviahash = new HashMap<>();
+        			enviahash.put (Servidor.NOME_VENDEDOR,nick);
+        			enviahash.put (Servidor.PASS_VENDEDOR,pass);
 
-        			// p = new PacoteDados (Servidor.LOGAR_VENDEDOR,tabhash);
+        			ea = new EnviaAcoes(Servidor.LOGAR_VENDEDOR,enviahash);
 
         			o = new ObjectOutputStream(clienteSocket.getOutputStream());
-	                o.writeObject(p);
-    	            o.flush();
+                                o.writeObject(ea);
+                                o.flush();
 
     	             BufferedReader sktInput = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream()));
 	                 System.out.println("\n"+sktInput.readLine()+"\n");
@@ -315,13 +322,13 @@ public class Cliente {
 	// falta fazer menuIniciaLeilao() , menuFinalizaLeilao() e menuEscolheLeilao()
 
 	private static void logoutComprador() throws IOException, ClassNotFoundException {
-    	tabhash = new HashMap<>();
-        tabhash.put(Servidor.NOME_COMPRADOR, nickname);
+    	enviahash = new HashMap<>();
+        enviahash.put(Servidor.NOME_COMPRADOR, nickname);
 
-        //p = new PacoteDados(Servidor.SAIR_COMPRADOR,tabhash);
+        ea = new EnviaAcoes(Servidor.SAIR_COMPRADOR,enviahash);
 
         o = new ObjectOutputStream(clienteSocket.getOutputStream());
-        o.writeObject(p);
+        o.writeObject(ea);
         o.flush();
 
         nickname = null;
@@ -329,13 +336,13 @@ public class Cliente {
     }
 
     private static void logoutVendedor() throws IOException, ClassNotFoundException {
-    	tabhash = new HashMap<>();
-        tabhash.put(Servidor.NOME_VENDEDOR, nickname);
+    	enviahash = new HashMap<>();
+        enviahash.put(Servidor.NOME_VENDEDOR, nickname);
 
-        //p = new PacoteDados(Servidor.SAIR_VENDEDOR,tabhash);
-
+        ea = new EnviaAcoes(Servidor.SAIR_VENDEDOR,enviahash);
+        
         o = new ObjectOutputStream(clienteSocket.getOutputStream());
-        o.writeObject(p);
+        o.writeObject(ea);
         o.flush();
 
         nickname = null;
@@ -345,5 +352,4 @@ public class Cliente {
 
 
 
-}
 }

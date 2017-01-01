@@ -1,7 +1,9 @@
+package trabSD;
+
 public class Vendedor extends Utilizador {
 
-    public Vendedor(String username, String password){
-        super(username, password);
+    public Vendedor(String username, String password, boolean logged){
+        super(username, password, logged);
     }
     
     public Vendedor(){

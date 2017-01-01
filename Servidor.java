@@ -1,9 +1,8 @@
-
+package trabSD;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 
 public class Servidor {
 	private static int port = 6062;
@@ -24,7 +23,7 @@ public class Servidor {
 	public static final String REGISTAR_COMPRADOR = "RegistarComprador";
 	public static final String LOGAR_COMPRADOR = "LogarComprador";
 	public static final String SAIR_COMPRADOR = "SairComprador";
-	public static final String FAZER_LICITACAO_COMP = "FazerLicitaçãoComprador"
+	public static final String FAZER_LICITACAO_COMP = "FazerLicitaçãoComprador";
 	public static final String NOME_COMPRADOR = "NomeComprador";
 	public static final String PASS_COMPRADOR = "PassComprador";
 
@@ -33,7 +32,7 @@ public class Servidor {
 	public static void main (String args[]) throws IOException  {
 		ServerSocket ss = new ServerSocket (port);
 
-		// (classe principal) k = new (classe principal)();
+		CasaLeiloes k = new CasaLeiloes();
 
 		// Exemplos de vários utilizadores
 		// falta definir estas funções
@@ -52,9 +51,9 @@ public class Servidor {
 // por esta parte a funcionar
 		while (true) {
 			Socket cliente = ss.accept();
-			System.out.println("Entrou no servidor\n IP" + cliente.getInetAdress()) // cliente -> getInetAdress
+			System.out.println("Entrou no servidor\n");
 
-			new Thread(new Handler(cliente k)).start();
+			//new Thread(new Handler(cliente k)).start();
 			// criar duas threads uma para leitura e outra para escrita
 		}
 

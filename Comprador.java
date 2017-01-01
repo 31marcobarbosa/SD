@@ -1,24 +1,27 @@
+package trabSD;
+
 public class Comprador extends Utilizador{
 
-	// Construtores
-	public Comprador () {
-		this.("", "", false);
-	}
+        // Construtores
+    public Comprador () {
+        super("", "", false);
+    }
 
-	public Comprador (String nickname, String pass) {
-		super(username, password);
-	}
+    public Comprador (String username, String password, boolean logged) {
+        super(username, password, logged);
+    }
 
-	public Comprador (Comprador a) {
-		super(a);
-	}
+    public Comprador (Comprador a) {
+        super(a);
+    }
 
-	// clone 
-	public Comprador clone () {
-		return new Comprador (this);
-	}
+    // clone 
+    public Comprador clone () {
+        return new Comprador(this);
+    }
 
-	//Equals 
+    //Equals 
+    @Override
     public boolean equals(Object o){
        if(this == o)
             return true;
@@ -29,6 +32,7 @@ public class Comprador extends Utilizador{
     }
     
     //toString
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("----|COMPRADOR|----\n");
@@ -36,7 +40,8 @@ public class Comprador extends Utilizador{
         return sb.toString();
     }
 
-    /*public int hashCode(){
-       return this.getEmail().hashCode();
-   }*/
+    @Override
+    public int hashCode(){
+       return this.getUsername().hashCode();
+   }
 }

@@ -1,3 +1,5 @@
+package trabSD;
+
 import java.io.Serializable;
 
 public abstract class Utilizador implements Serializable
@@ -29,7 +31,7 @@ public abstract class Utilizador implements Serializable
       return username;
     }
 
-    public String getLogged() {
+    public boolean getLogged() {
       return logged;
     }
 
@@ -59,9 +61,10 @@ public abstract class Utilizador implements Serializable
         StringBuilder sb = new StringBuilder();
         sb.append("Password: ").append(password).append("\n");
         sb.append("Username: ").append(password).append("\n");
-        return sb.toString();2
+        return sb.toString();
     }
     
+   @Override
    public abstract Utilizador clone();
    
    /*public int hashCode(){

@@ -1,97 +1,133 @@
-import java.util.Collectors;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.stream.Collectors;
-import static java.util.stream.Collectors.toMap;
+package trabSD;
 
+
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Leilao {
 
-	private String vendedor;
-	private HashMap<Comprador, float> licitadores;
-	private float preçoInicial;
-	private float maxLicitacao;
-	// acrescentar um float para a maxLicitacao 
-	// acrescentar uma string para a licitação
+        private String vendedor;
+        private HashMap<Comprador, Float> licitadores;
+        private float preçoInicial;
+        private float maxLicitacao;
+        private int idleilao;
+        private String maxLicitador;
+        // acrescentar um float para a maxLicitacao 
+        // acrescentar uma string para a licitação
 
-	public Leilao() {
-		vendedor = "";
-		licitadores = new HashMap<Comprador, float>();
-		preçoInicial = 0.0;
-		maxLicitacao = 0.0;
-	}
+        public Leilao() {
+            vendedor = "";
+            licitadores = new HashMap<Comprador, Float>();
+            preçoInicial = (float) 0.0;
+            maxLicitacao = (float) 0.0;
+            maxLicitador = "";
+        }
 
-	public Leilao(int idleilao, HashMap<Comprador, float> licitadores, float preçoInicial, float maxLicitacao) {
-		this.vendedor = vendedor;
-		this.licitadores = licitadores.entrySet()
-									  .stream()
-									  .collect(toMap(e->e.getKey().clone(), e->e.getValue().clone()));
-		this.preçoInicial = preçoInicial;
-		this.maxLicitacao = maxLicitacao;
-	}
-	
-	public Leilao(Leilao l) {
-		this.idleilao = l.getId();
-		this.licitadores = l.getLicitadores();
-		this.preçoInicial = l.getInicial();
-		this.maxLicitacao = l.getMaxLicitacao
-	}
+        public Leilao(int idleilao, HashMap<Comprador, Float> licitadores, float preçoInicial, float maxLicitacao,String maxLicitador) {
+            this.vendedor = vendedor;
+            this.licitadores = licitadores;
+            this.preçoInicial = preçoInicial;
+            this.maxLicitacao = maxLicitacao;
+            this.maxLicitador = maxLicitador;
+        }
 
-	public int getId() {
-		return idleilao;
-	}
+        public Leilao(Leilao l) {
+                this.idleilao = l.getId();
+                this.licitadores = l.getLicitadores();
+                this.preçoInicial = l.getInicial();
+                this.maxLicitacao = l.getMaxLicitacao();
+                this.maxLicitador = l.getMaxLicitador();
+        }
 
-	public Map<Comprador, int> getLicitadores() {
-		return licitadores;
-	}
+    public void setMaxLicitador(String maxLicitador) {
+        this.maxLicitador = maxLicitador;
+    }
 
-	public float getInicial() {
-		return preçoInicial;
-	}
+    public String getMaxLicitador() {
+        return maxLicitador;
+    }
 
-	public float getMaxLicitacao() {
-		return maxLicitacao;
-	}
+        public int getId() {
+            return idleilao;
+        }
 
-	public void setId(int idleilao) {
-		this.idleilao = idleilao;
-	}
+        public HashMap<Comprador, Float> getLicitadores() {
+            return licitadores;
+        }
 
-	public void setLicitadores(Map<Comprador, int> licitadores) {
-		this.licitadores = licitadores;
-	}
+        public float getInicial() {
+            return preçoInicial;
+        }
 
-	public void setInicial(float preçoInicial) {
-		this.preçoInicial = preçoInicial;
-	}
+        public float getMaxLicitacao() {
+            return maxLicitacao;
+        }
+
+        public void setId(int idleilao) {
+            this.idleilao = idleilao;
+        }
+
+        public void setLicitadores(HashMap<Comprador, Float> licitadores) {
+            this.licitadores = licitadores;
+        }
+        
+        public void setInicial(float preçoInicial) {
+            this.preçoInicial = preçoInicial;
+        }
 
 	public void setMaxLicitacao(float maxLicitacao) {
-		this.maxLicitacao = maxLicitacao;
-	}
+            this.maxLicitacao = maxLicitacao;
+        }
 
-	public boolean equals(Object o) {
-		if(this == o)
-			return true;
-		if ((o == null) || (this.getClass() != o.getClass()))
-			return false;
-		Leilao m = (Leilao) o;
-		return (this.vendedor.equals(o.vendedor) &&
-				this.preçoInicial == preçoInicial &&
-				this.maxLicitacao == maxLicitacao);				
-	}
+    @Override
+    public String toString() {
+        return "Leilao{" + "vendedor=" + vendedor + ", licitadores=" + licitadores + ", pre\u00e7oInicial=" + preçoInicial + ", maxLicitacao=" + maxLicitacao + ", idleilao=" + idleilao + ", maxLicitador=" + maxLicitador + '}';
+    }
 
-	// toString()
-	public String toString() {
-		StringBuilder s = new StringBuilder("---|Leilao|---\n");
-		s.append("Vendedor: " + this.getId() + "\n");
-		s.append("Preço Inicial: " + this.getInicial() + "\n");
-		s.append("Licitação Máxima: " + this.getMaxLicitacao()+"\n")
-		return s.toString();
-	}
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
 
-	public Leilao clone(){
-		return new Leilao(this);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Leilao other = (Leilao) obj;
+        if (Float.floatToIntBits(this.preçoInicial) != Float.floatToIntBits(other.preçoInicial)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.maxLicitacao) != Float.floatToIntBits(other.maxLicitacao)) {
+            return false;
+        }
+        if (this.idleilao != other.idleilao) {
+            return false;
+        }
+        if (!Objects.equals(this.vendedor, other.vendedor)) {
+            return false;
+        }
+        if (!Objects.equals(this.maxLicitador, other.maxLicitador)) {
+            return false;
+        }
+        if (!Objects.equals(this.licitadores, other.licitadores)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    
+    public Leilao clone(){
+        return new Leilao(this);
+    }
 
 
 }
