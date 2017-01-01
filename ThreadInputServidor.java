@@ -32,9 +32,14 @@ public class ThreadInputServidor extends Thread {
 
     public void run () {
 
-    	try{ }
+    	try{ 
+    	    String input;
+    	    while ((input = br.readLine() != null){
+    	    	
+    	    }    		
+    	
 
-    	catch(Exception e){ 	
+    	} catch(Exception e){ 	
     		 System.out.println(e.getMessage());	
     	}
     }

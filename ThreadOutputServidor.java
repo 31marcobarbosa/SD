@@ -9,6 +9,7 @@ public class ThreadOutputServidor extends Thread {
     private Menu menu;
     private ReentrantLock lock;
     private Condition cn;
+    private PrintWriter pwt;
 
 
     public ThreadOutputCliente(BufferedReader br, Menu menu, ReentrantLock lock, Condition cn){
@@ -20,6 +21,26 @@ public class ThreadOutputServidor extends Thread {
 
 
     public void run () {
+        lock.lock();
+
+        try{
+            String input;
+
+            while (true) {
+                while ((input = br.readLine()) == null)
+                    cn.await();
+                if (input.equals("Sair"))
+                    break;
+                pws.println(input);
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            lock.unlock();
+        }
     	
     	
     }
