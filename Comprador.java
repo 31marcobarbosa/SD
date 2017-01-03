@@ -1,4 +1,4 @@
-package trabSD;
+
 
 public class Comprador extends Utilizador{
 

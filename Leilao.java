@@ -1,4 +1,4 @@
-package trabSD;
+
 
 
 import java.util.HashMap;
@@ -21,10 +21,12 @@ public class Leilao {
             preçoInicial = (float) 0.0;
             maxLicitacao = (float) 0.0;
             maxLicitador = "";
+            idleilao = -1;
         }
 
-        public Leilao(int idleilao, HashMap<Comprador, Float> licitadores, float preçoInicial, float maxLicitacao,String maxLicitador) {
+        public Leilao(int idleilao, HashMap<Comprador, Float> licitadores, float preçoInicial, float maxLicitacao,String maxLicitador, String vendedor) {
             this.vendedor = vendedor;
+            this.idleilao = idleilao;
             this.licitadores = licitadores;
             this.preçoInicial = preçoInicial;
             this.maxLicitacao = maxLicitacao;
@@ -45,6 +47,10 @@ public class Leilao {
 
     public String getMaxLicitador() {
         return maxLicitador;
+    }
+
+    public String getVendedor(){
+        return vendedor;
     }
 
         public int getId() {
@@ -68,7 +74,9 @@ public class Leilao {
         }
 
         public void setLicitadores(HashMap<Comprador, Float> licitadores) {
-            this.licitadores = licitadores;
+            this.licitadores = licitadores;);
+            for(Comprador c : licitadores.keySet())
+                System.out.println(c.getUsername());
         }
         
         public void setInicial(float preçoInicial) {

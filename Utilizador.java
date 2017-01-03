@@ -1,11 +1,15 @@
-package trabSD;
 
 import java.io.Serializable;
+import java.net.Socket;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 public abstract class Utilizador implements Serializable
 {
    private String username, password;
    private boolean logged;
+   private Socket s;
+   private PrintWriter output;
    
    public Utilizador(String username, String password, boolean logged){
        this.username = username;
@@ -22,7 +26,20 @@ public abstract class Utilizador implements Serializable
        this.password = u.getPassword();
        this.logged = u.getLogged();
    }
+
+   public void send(String msg){
+      output.println(msg);
+   }
     
+   public Socket getS(){
+      return s;
+   }
+
+   public void setS(Socket s) throws IOException{
+      this.s = s;
+      output = new PrintWriter(s.getOutputStream(), true);
+   }
+
    public String getPassword(){
       return password;
     }

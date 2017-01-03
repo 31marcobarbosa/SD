@@ -1,8 +1,6 @@
-package trabSD;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;	
 
@@ -19,12 +17,14 @@ public class CasaLeiloes {
 
     // por o lock no inicio
     private Lock lock = new ReentrantLock();
+    private int id=0;
 
 
     // construtores
     public CasaLeiloes () {
         this.compradores = new HashMap<>();
         this.vendedores = new HashMap<>();
+        this.leiloesAtivos = new HashMap<>();
     }
 
     // getters
@@ -107,16 +107,27 @@ public class CasaLeiloes {
         }
     }
 
+    public String ConsultaLeilao () {
+        String leiloes = "";
+        for(Leilao l : leiloesAtivos.values()){
+            leiloes = leiloes + l.toString();
+        }
+        return leiloes;
+    }
+
     //Funções que verifica se o login efetuado é válido
     public boolean LoginComprador(String username, String password){
         boolean r = false;
         lock.lock();
+        Comprador c = this.compradores.get(username);
         try{
-            if(!this.compradores.get(username).getLogged() && this.compradores.containsKey(username)){
-                if((this.compradores.get(username).getPassword().equals(password))) {
-                    this.compradores.get(username).setLogged(true);
+            if(c != null){
+            if(!c.getLogged() && this.compradores.containsKey(username)){
+                if((c.getPassword().equals(password))) {
+                    c.setLogged(true);
                     r = true;
                 }
+            }
             }
             return r;
         }finally{
@@ -127,12 +138,15 @@ public class CasaLeiloes {
     public boolean LoginVendedor(String username, String password){
         boolean r = false;
         lock.lock();
+        Vendedor v = this.vendedores.get(username);
         try{
-            if(!this.compradores.get(username).getLogged() && this.compradores.containsKey(username)){
-                if((this.compradores.get(username).getPassword().equals(password))) {
-                    this.compradores.get(username).setLogged(true);
+            if(v != null){
+            if(!v.getLogged() && this.vendedores.containsKey(username)){
+                if((v.getPassword().equals(password))) {
+                    v.setLogged(true);
                     r = true;
                 }
+            }
             }
             return r;
         }finally{
@@ -168,6 +182,7 @@ public class CasaLeiloes {
         boolean r = false;
         lock.lock();
         try {
+            System.out.println("Actualizar");
             Leilao leilao = leiloesAtivos.get(vendedor);
             if (licitacao > leilao.getMaxLicitacao()) {
                 leilao.setMaxLicitacao(licitacao);
@@ -185,16 +200,16 @@ public class CasaLeiloes {
         }
     }
     
-    public boolean IniciaLeilao(String vendedor, float pInicial, float max) {
-        boolean r = false;
+    public void IniciaLeilao(String vendedor, float pInicial, float max) {
         lock.lock();
         
         try{
             HashMap<Comprador, Float> licitadores = new HashMap<>();
-            Leilao leilao = new Leilao(leiloesAtivos.size(), licitadores, pInicial, max, null);
+            System.out.println(vendedor);
+            Leilao leilao = new Leilao(id, licitadores, pInicial, max, "", vendedor);
+            leilao.toString();
             leiloesAtivos.put(vendedor, leilao);
-            r = true;
-            return r;
+            id++;
         }finally{
             lock.unlock();
         }
@@ -203,7 +218,11 @@ public class CasaLeiloes {
     public boolean FinalizarLeilao(String vendedor) {
         boolean r = false;
         lock.lock();
+        Leilao l = leiloesAtivos.get(vendedor);
         try{
+            for(Comprador c : l.getLicitadores().keySet()){
+                c.send("o leilão terminou! O vencedor é: " + l.getMaxLicitador());
+            }
             leiloesAtivos.remove(vendedor);
             r = true;
             return r;
@@ -212,14 +231,34 @@ public class CasaLeiloes {
         }
     }
     
-    public boolean FazLicitaçao(Float valor, String vendedor, Comprador comprador) {
+    public boolean FazLicitaçao(Float valor, int id_leilao, Comprador comprador) {
         boolean r = false;
         lock.lock();
         try{
+        Leilao leilao = null;
+        System.out.println("Estou aqui");
+        String vendedor = "";
+        for(Leilao l: this.leiloesAtivos.values()){
+            if(l.getId() == id_leilao){
+                leilao = l;
+                break;
+            }
+        }
+        vendedor = leilao.getVendedor();
+        if(!vendedor.equals(""))
             r = atualizarLicitaçao(comprador, valor, vendedor);
-            return r;
+        return r;
         }finally{
             lock.unlock();
         }
+    }
+    
+    public boolean EscolheLeilao(int id_leilao) {
+        boolean r = false;
+        for(Leilao l : this.leiloesAtivos.values()) {
+            if(l.getId() == id_leilao) r = true;
+        }
+        
+        return r;
     }
 }

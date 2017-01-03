@@ -3,24 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trabSD;
+
 
 /**
  *
  * @author Houdini
  */
 
-import java.lang.Thread;
-import java.util.ResourceBundle;
 import java.util.concurrent.locks.*;
 import java.io.*;
-import java.net.*;
 
-public class ThreadOutputCliente {
+public class ThreadOutputCliente extends Thread{
     private BufferedReader br;
     private Menu menu;
     private ReentrantLock lock;
-    private Condition cn;
+    private Condition cn;   
     
     public ThreadOutputCliente(BufferedReader br, Menu menu, ReentrantLock lock, Condition cn){
         this.br = br;
@@ -29,56 +26,100 @@ public class ThreadOutputCliente {
         this.cn = cn;
     }
     
-    public void run() throws Exception{
+    public void run(){
+        try{
             String input;
             while((input = br.readLine()) != null){
-                System.out.println("\n"+linha+"\n");
-                if(input.equals("Comprador seleccionado")){
+                if(input.equals("Comprador")){
                     menu.setOption(1);
                     this.lock.lock();
                     cn.signal();
                     this.lock.unlock();
                 }
-                else if(input.equals("Vendedor seleccionado")){
+                else if(input.equals("Vendedor")){
                     menu.setOption(2);
                     this.lock.lock();
                     cn.signal();
                     this.lock.unlock();
                 }
-                else if(input.equals("Iniciou sessão como Comprador")){
+                else if(input.equals("RegistarComprador")){
+                    this.lock.lock();
+                    cn.signal();
+                    this.lock.unlock();
+                }
+                else if(input.equals("RegistarVendedor")){
+                    this.lock.lock();
+                    cn.signal();
+                    this.lock.unlock();
+                }
+                else if(input.equals("LogarComprador")){
                     menu.setOption(3);
                     this.lock.lock();
                     cn.signal();
                     this.lock.unlock();
                 }
-                else if(input.equals("Iniciou sessão como Vendedor")){
+                else if(input.equals("LogarVendedor")){
                     menu.setOption(4);
-                    this.locl.lock();
+                    this.lock.lock();
                     cn.signal();
                     this.lock.unlock();
                 }
-                else if(input.equals("Comprador entrou no leilão")){
+                else if(input.equals("EscolherLeilao")){
                     menu.setOption(5);
                     this.lock.lock();
                     cn.signal();
                     this.lock.unlock();
                 }
-                else if(input.equals("Vendedor iniciou um leilão")){
+                else if(input.equals("IniciarLeilao")){
                     menu.setOption(6);
+                    this.lock.lock();
+                    cn.signal();
+                    this.lock.unlock();
+                }
+                else if(input.equals("FinalizarLeilao")) {
+                    menu.setOption(4);
                     this.lock.lock();
                     cn.signal();
                     this.lock.unlock();
                 }
                 else if(input.equals("Consultar leilão")){
                     //Ver isto
-                    }
-                else if(input.equals("Sair") || input.equals("Username inválido") || input.equals("Password inválido")){
+                }
+                else if(input.equals("Licitar")){
+                    this.lock.lock();
+                    cn.signal();
+                    this.lock.unlock();
+                }
+                else if(input.equals("LeilaoInexistente")){
+                    menu.setOption(3);
+                    this.lock.lock();
+                    cn.signal();
+                    this.lock.unlock();
+                }
+                else if(input.equals("Consultar")){
+                    this.lock.lock();
+                    cn.signal();
+                    this.lock.unlock();
+                }
+                else if(input.equals("Voltar")){
+                    menu.setOption(3);
+                    this.lock.lock();
+                    cn.signal();
+                    this.lock.unlock();
+                }
+                else if(input.equals("Erro") || input.equals("Utilizador já registado") || input.equals(("Logout"))){
                     menu.setOption(0);
                     this.lock.lock();
                     cn.signal();
                     this.lock.unlock();
                 }
+                else if(input.equals("Sair")){
+                    System.exit(1);
+                }
             }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
 

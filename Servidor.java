@@ -1,38 +1,19 @@
-package trabSD;
-
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Servidor {
 	private static int port = 6062;
-	// private static (classe principal)  k = null
-
-
-	// Ações do vendedor
-	public static final String REGISTAR_VENDEDOR = "RegistarVendedor";
-	public static final String LOGAR_VENDEDOR = "LogarVendedor";
-	public static final String SAIR_VENDEDOR = "SairVendedor";
-	public static final String INICIAR_LEILAO_VEND = "IniciarLeilaoVendedor";
-	public static final String FINALIZAR_LEILAO_VEND = "FinalizarLeilaoVendedor";
-	public static final String NOME_VENDEDOR = "NomeVendedor";
-	public static final String PASS_VENDEDOR = "PassVendedor";
-	//public static final String CONSULTAR_LEILAO_VEND = "ConsultarLeilaoVendedor";
-
-	// Ações do Comprador
-	public static final String REGISTAR_COMPRADOR = "RegistarComprador";
-	public static final String LOGAR_COMPRADOR = "LogarComprador";
-	public static final String SAIR_COMPRADOR = "SairComprador";
-	public static final String FAZER_LICITACAO_COMP = "FazerLicitaçãoComprador";
-	public static final String NOME_COMPRADOR = "NomeComprador";
-	public static final String PASS_COMPRADOR = "PassComprador";
-
-
-
+        
 	public static void main (String args[]) throws IOException  {
-		ServerSocket ss = new ServerSocket (port);
-
+        Socket s;
 		CasaLeiloes k = new CasaLeiloes();
+        ReentrantLock lock = new ReentrantLock();
 
 		// Exemplos de vários utilizadores
 		// falta definir estas funções
@@ -49,22 +30,25 @@ public class Servidor {
 		k.registaComprador ("comp5","passcomp5");
 
 // por esta parte a funcionar
-		while (true) {
-			Socket cliente = ss.accept();
-			System.out.println("Entrou no servidor\n");
+		try{
+		ServerSocket ss = new ServerSocket (port);
+		while ((s=ss.accept()) != null) {
+			        Mensagem mensagem = new Mensagem();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                    PrintWriter input = new PrintWriter(s.getOutputStream(),true);
+                    Condition cn = lock.newCondition();
+                    System.out.println("Entrou no servidor\n");
 
-			//new Thread(new Handler(cliente k)).start();
+                    ThreadInputServidor tis = new ThreadInputServidor(br, s, k, lock, cn, input, mensagem);
+                    ThreadOutputServidor tos = new ThreadOutputServidor(br, lock, cn, input, mensagem);
+
+                    tis.start();
+                    tos.start();
 			// criar duas threads uma para leitura e outra para escrita
 		}
-
-
-
-
-
+		ss.close();
+	}catch(IOException e){
+		System.out.println(e.getMessage());
 	}
-
-
-
-
-
+	}
 }
